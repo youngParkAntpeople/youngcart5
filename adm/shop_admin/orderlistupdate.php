@@ -13,6 +13,9 @@ define("_ORDERMAIL_", true);
 $sms_count = 0;
 $sms_messages = array();
 
+// SMS config DB 
+$sms5 = sql_fetch(" select * from {$g5['sms5_config_table']}");
+
 for ($i=0; $i<count($_POST['chk']); $i++)
 {
     // 실제 번호를 넘김
@@ -45,7 +48,7 @@ for ($i=0; $i<count($_POST['chk']); $i++)
                 $sms_contents = conv_sms_contents($od_id, $default['de_sms_cont4']);
                 if($sms_contents) {
                     $receive_number = preg_replace("/[^0-9]/", "", $od['od_hp']);	// 수신자번호
-                    $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
+                    $send_number = preg_replace("/[^0-9]/", "", $sms5['cf_phone']); // 발신자번호
 
                     if($receive_number)
                         $sms_messages[] = array('recv' => $receive_number, 'send' => $send_number, 'cont' => $sms_contents);
@@ -78,7 +81,7 @@ for ($i=0; $i<count($_POST['chk']); $i++)
                 $sms_contents = conv_sms_contents($od_id, $default['de_sms_cont5']);
                 if($sms_contents) {
                     $receive_number = preg_replace("/[^0-9]/", "", $od['od_hp']);	// 수신자번호
-                    $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
+                    $send_number = preg_replace("/[^0-9]/", "", $sms5['cf_phone']); // 발신자번호
 
                     if($receive_number)
                         $sms_messages[] = array('recv' => $receive_number, 'send' => $send_number, 'cont' => $sms_contents);
